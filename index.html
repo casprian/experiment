@@ -1,15 +1,769 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<style type="text/css">
-	td{
-		padding: 10px;
-		border: solid 1px red;
-	}
-</style>
-<head>test</head>
+
+<head>
+	<meta charset="utf-8" />
+	<style>
+		@page {
+  size: A4;
+  --pagedjs-margin-top: 0.5in;
+  --pagedjs-margin-right: 0.5in;
+  --pagedjs-margin-left: 0.5in;
+  --pagedjs-margin-bottom: 0.5in;
+  @top-center {
+    content: element(watermark);
+  }
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+div.page {
+  width: 100%;
+  page-break-after: always;
+  page-break-inside: avoid;
+  position: relative;
+}
+div.page .page-counter-reset {
+  counter-reset: page 0;
+}
+div.repeating {
+  position: running(watermark);
+  text-align: center;
+  width: 100%;
+  z-index: -9999;
+  opacity: 0.15;
+  font-family: Arial;
+  font-weight: 900;
+  margin-top: 1100px;
+  font-size: 76px;
+  letter-spacing: -0.078em;
+  line-height: 1.6;
+}
+div.page.summary div.header {
+  display: table;
+  vertical-align: top;
+}
+div.page.summary div.header .left {
+  float: left;
+  margin-right: -0.5px;
+  width: 50%;
+}
+div.page.summary div.header .left table {
+  float: right;
+  width: 100%;
+  height: 400px;
+}
+div.page.summary div.header .right {
+  float: left;
+  width: 50%;
+}
+div.page.summary div.header .right table {
+  float: left;
+  width: 100%;
+  height: 400px;
+}
+div.page.summary div.header table {
+  border-collapse: collapse;
+}
+div.page.summary div.header table th,
+div.page.summary div.header table td {
+  vertical-align: top;
+  border: 0.5px solid black;
+  white-space: pre-line;
+}
+div.page.summary div.header table th.fcr-title,
+div.page.summary div.header table td.fcr-title {
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+div.page.summary div.header table th.company,
+div.page.summary div.header table td.company {
+  height: 100%;
+  text-align: center;
+}
+div.page.summary div.header table th.company div.logo-container,
+div.page.summary div.header table td.company div.logo-container {
+  display: flex;
+  justify-content: space-between;
+}
+div.page.summary div.header table th.company img.logo,
+div.page.summary div.header table td.company img.logo {
+  width: 34%;
+  max-height: 50px;
+  margin-bottom: 3px;
+  margin-left: 25px;
+  display: inline-flex;
+  object-fit: contain;
+}
+div.page.summary div.header table th.company div.logo-container div.after-logo,
+div.page.summary div.header table td.company div.logo-container div.after-logo {
+  width: 50%;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-family: monospace;
+  font-weight: 600;
+}
+div.page.summary div.header table th.company p,
+div.page.summary div.header table td.company p {
+  text-align: center;
+}
+div.page.summary div.header table th.company p.name,
+div.page.summary div.header table td.company p.name {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Times New Roman', Times, serif;
+}
+div.page.summary div.header table th.company p.details,
+div.page.summary div.header table td.company p.details {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+div.page.summary div.header table th.company p.legal,
+div.page.summary div.header table td.company p.legal {
+  white-space: pre-line;
+  font-size: 7px;
+  font-weight: 400;
+  text-align: justify;
+  height: auto;
+}
+div.page.summary div.header table th.not-title,
+div.page.summary div.header table td.not-title {
+  font-size: 12px;
+  font-weight: 700;
+}
+div.page.summary div.header table th.no-border-left,
+div.page.summary div.header table td.no-border-left {
+  border-left: none;
+}
+div.page.summary div.header table th.notify-party,
+div.page.summary div.header table td.notify-party {
+  height: 100%;
+}
+div.page.summary div.header table th.notify-party.top,
+div.page.summary div.header table td.notify-party.top {
+  border-bottom: none;
+}
+div.page.summary div.header table th.notify-party.bottom,
+div.page.summary div.header table td.notify-party.bottom {
+  border-top: none;
+}
+div.page.summary div.header table th.no-border-right,
+div.page.summary div.header table td.no-border-right {
+  border-right: none;
+}
+div.page.summary div.header table th p,
+div.page.summary div.header table td p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin: 0;
+  height: 60px;
+  overflow: hidden;
+  width: 355px;
+  white-space: pre-line;
+  line-height: 1;
+}
+div.page.summary div.header table td p.port-and-country {
+	width: 220px;
+	height: 25px;
+	font-size: 10px;
+}
+div.page.summary div.header table td p.date-of-receipt-cargo {
+	width: 130px;
+	height: 25px;
+	font-size: 10px;
+}
+div.page.summary div.header table th label,
+div.page.summary div.header table td label {
+  display: block;
+  font-size: 8px;
+  margin: auto 5px 4px auto;
+}
+div.page.summary div.header table th label.italics,
+div.page.summary div.header table td label.italics {
+  font-style: italic;
+}
+div.page.summary div.header table th label.bold,
+div.page.summary div.header table td label.bold {
+  font-weight: 700;
+}
+div.page.summary div.header table th label.span,
+div.page.summary div.header table td label.span {
+  display: inline;
+  margin-right: 50px;
+}
+div.page.summary div.receipt-items {
+  margin-top: 6px;
+  width: 100%;
+  height: 264px;
+  overflow: hidden;
+}
+div.page.summary div.receipt-items table {
+  border-collapse: collapse;
+  width: 100%;
+}
+div.page.summary div.receipt-items table tr.order-items-clause th {
+  border: none;
+}
+div.page.summary div.receipt-items table tr.to-be-shown td {
+  text-align: center;
+  letter-spacing: 4px;
+}
+div.page.summary div.receipt-items table th {
+  vertical-align: top;
+  border: 0.5px solid black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.4px;
+  word-spacing: 0.2px;
+  vertical-align: middle;
+}
+div.page.summary div.receipt-items table th.no-border-right {
+  border-right: none;
+}
+div.page.summary div.receipt-items table th.no-border-left {
+  border-left: none;
+}
+div.page.summary div.receipt-items table th.marks-numbers {
+  width: 24%;
+}
+div.page.summary div.receipt-items table th.description-of-goods {
+  width: 25%;
+}
+div.page.summary div.receipt-items table td {
+  white-space: pre-wrap;
+  font-family: monospace;
+  word-break: break-word;
+}
+div.page.summary div.total {
+  margin-top: 10px;
+  width: 100%;
+  height: 34px;
+  overflow: hidden;
+}
+div.page.summary div.total label {
+  display: inline-block;
+  text-align: right;
+  width: 15%;
+  margin-right: 30px;
+}
+div.page.summary div.total span {
+  font-weight: 800;
+}
+div.page.summary div.footer {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+div.page.summary div.footer table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+div.doc-attachments table {
+width: 320px;
+}
+div.page.summary div.footer table td {
+  width: 50%;
+  border: 0.5px solid black;
+  border-bottom: 2px solid black;
+  white-space: pre-line;
+  text-align: justify;
+}
+div.doc-attachments table td.document-received ,
+div.page.summary div.footer table td.document-received {
+  height: 45px;
+}
+div.doc-attachments table label,
+div.page.summary div.footer table td.document-received label {
+  font-size: 9px;
+  width: 66%;
+  white-space: pre-wrap;
+  text-align: justify;
+  margin-right: 16px;
+  float: left;
+}
+div.doc-attachments table label{
+	width: 100%;
+	font-size: 10px;
+}
+div.doc-attachments table td.document-received span,
+div.page.summary div.footer table td.document-received span {
+  margin-top: 9px;
+  display: inline-block;
+}
+div.page.summary div.footer table td.signature {
+  vertical-align: top;
+}
+div.page.summary div.footer table td.signature p {
+  font-size: 10px;
+  font-style: oblique;
+  font-weight: lighter;
+  margin-top: 2px;
+}
+div.page.summary div.footer table td.signature div {
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+}
+
+div.page.summary div.footer table td.signature div div {
+    width: auto;
+	height: 75px;
+    margin-top: 3px;
+}
+
+div.page.summary div.footer table td.signature div div.signature-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.page.summary div.footer table td.signature div div img {
+    height: auto;
+	width: auto;
+	max-height: 75px;
+	max-width: 280px;
+}
+
+div.page.summary div.footer table td.signature div label {
+  display: block;
+  font-size: 10px;
+  font-style: oblique;
+  font-weight: lighter;
+}
+div.page.summary div.footer table td.signature div span {
+  display: block;
+  line-height: 0.95;
+}
+div.page.summary div.footer table td.signature div span.field {
+  margin-top: -12px;
+}
+div.page.summary div.footer table td.signature div.date-and-legal {
+  margin-left: -15px;
+  text-align: left;
+  margin-top: -5px;
+  height: 48px
+}
+div.page.summary div.footer table td.signature div.date-and-legal label {
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 5px;
+}
+div.page.summary div.footer table td.signature div.date-and-legal label.legal {
+  display: block;
+  white-space: pre-line;
+  font-size: 10px;
+}
+div.page.summary div.footer table td.signature div.date-and-legal span {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+}
+div.doc-attachments table td.document-list ,
+div.page.summary div.footer table td.document-list {
+  vertical-align: top;
+  position: relative;
+}
+div.page.summary div.footer table td.document-list label{
+  position: absolute; 
+  bottom: 0;
+}
+div.doc-attachments table td.document-list div.doclist {
+	padding-bottom: -10px;
+	padding-left: 10px;
+}
+div.page.summary div.footer table td.document-list div {
+  width: 100%;
+  overflow: hidden;
+  height: 239px;
+}
+div.doc-attachments table td.document-list div div,
+div.page.summary div.footer table td.document-list div div {
+  white-space: nowrap;
+  height: 10px;
+  font-size: 9px;
+}
+div.doc-attachments table td.document-list div div span,
+div.page.summary div.footer table td.document-list div div span {
+  float: right;
+  margin-left: 5px;
+  margin-right: 2px;
+}
+div.doc-attachments table td.document-list div div span:last-of-type{
+	margin-right: 150px;	
+}
+div.doc-attachments table td.document-list ol,
+div.page.summary div.footer table td.document-list ol {
+    padding-left: 20px;
+	margin-top: 2px;
+}
+
+div.page.summary div.footer table td.document-list ol li:nth-of-type(1n+17) {
+	display: none;
+}
+
+div.doc-attachments table td.document-list ol li,
+div.page.summary div.footer table td.document-list ol li{
+	clear: both;
+	font-size: 11px!important;
+}
+div.doc-attachments table td.document-list ol li span,
+div.page.summary div.footer table td.document-list ol li span {
+  float: right;
+  margin-right: 14px;
+  margin-left: 17px;
+}
+#lotdocs{
+	width: 100%;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+div.doc-attachments table td.no-border-right,
+div.page.summary div.footer table td.no-border-right {
+  border-right: none;
+}
+div.doc-attachments table td.no-border-left,
+div.page.summary div.footer table td.no-border-left {
+  border-left: none;
+}
+div.page table {
+  --pagedjs-repeat-header: all;
+}
+div.page table thead.header tr {
+  --pagedjs-repeat-header: all;
+}
+div.page table thead.header tr.field-headers td {
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  vertical-align: top;
+}
+div.page table thead.header tr.field-headers td.marks-numbers {
+  text-align: left;
+}
+div.page table thead.header #attachementNumber::after {
+  content: counter(page) !important;
+}
+div.page.order-items {
+  font-family: Courier New, Courier, monospace;
+}
+div.page.order-items table tr.order-item-row {
+  white-space: pre-wrap;
+  text-align: left;
+  vertical-align: top;
+  page-break-inside: avoid;
+}
+
+div.page.order-items table tr.order-item-row.total td.total {
+  padding-left: 9%;
+  padding-right: 9%;
+}
+
+div.page.order-items table tr.order-item-row td {
+  padding-bottom: 20px;
+}
+div.page.order-items table tr.order-item-row td.marks-and-numbers {
+  width: 30%;
+  padding-right: 10px;
+}
+div.page.order-items table tr.order-item-row td.marks-and-numbers.summary {
+  text-align: right;
+  padding-right: 40px;
+}
+div.page.order-items table tr.order-item-row td.packages {
+  white-space: nowrap;
+  width: 14%;
+}
+div.page.order-items table tr.order-item-row td.description {
+  width: 40%;
+  padding-left: 15px;
+}
+div.page.order-items table tr.order-item-row td.weight {
+  width: 18%;
+  text-align: right;
+}
+div.page.order-items table tr.order-item-row td.volume {
+  width: 8%;
+  text-align: right;
+}
+div.page.order-items table.summary {
+  padding-top: 20px;
+}
+div.page.order-items div.fcr-end {
+  text-align: center;
+  width: 100%;
+  font-size: 9px;
+}
+.wrap{
+	word-wrap: break-word!important;
+    overflow-wrap: break-word!important;
+    white-space: normal!important;
+    font-size: 11px!important;
+    float: left;
+    width: 200px!important;
+    height: auto!important;
+}
+ul.container-inline-list {
+	display: inline;
+	padding: 0;
+}
+ul.container-inline-list li {
+	display: inline;
+}
+ul.container-inline-list li::before {
+	content: "& "
+}
+ul.container-inline-list li:first-child::before {
+	content: ""
+}
+	</style>
+	
+</head>
+
 <body>
-<table>
-	<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-	<tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
-</table></body>
+	<div class="repeating">
+		DRAFT
+	</div>
+	<div class="page summary">
+        <div class="header">
+            <div class="left">
+                <table>
+                    <tbody>
+                        <tr>
+							<td colspan="2" class="no-border-left address-field"><label class="italics">SHIPPERS</label><p>ALLIANCE CYCLE INDUSTRY CO,LTD
+BUILDING 1,CHAMPS ELYSEES, NONG YUAN Shenzhen Guangdong 518000 China</p></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-left address-field"><label class="italics">CONSIGNEE</label><p>HUFFY CORPORATION
+CENTERVILLE BUSINESS PKWY  Dayton Ohio 45459 United States</p></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-left notify-party top address-field"><label class="italics">NOTIFY PARTY</label><p>HUFFY CORPORATION
+     </p></td>
+                        </tr>
+                        <tr id="notify-party-2">
+                            <td colspan="2" class="no-border-left notify-party bottom address-field"><label class="italics">ALSO NOTIFY</label><p>HUFFY CORPORATION
+     </p></td>
+                        </tr>
+                        <tr>
+                            <td class="no-border-left"><label class="italics">VESSEL & VOYAGE</label> </td>
+                            <td><label class="italics">SAILING DATE</label></td>
+                        </tr>
+                        <tr>
+                            <td class="no-border-left"><label class="italics">PLACE OF RECEIPT</label>Ningbo, China</td>
+                            <td><label class="italics">PORT OF LOADING</label>Ningbo, China</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="right">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="fcr-title no-border-right">FORWARDER'S CARGO RECEIPT</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-right"><label class="italics bold span">RECEIPT NO.</label>FCR000010618</td>
+                        </tr>
+                        <tr>
+                            <td><label class="italics bold">PORT AND COUNTRY OF ORIGIN</label><p class="port-and-country">Ningbo, China</p></td>
+							<td class="no-border-right"><label class="italics bold">DATE OF RECEIPT OF CARGO</label><p class="date-of-receipt-cargo">15 Jul., 2021</p></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="not-title no-border-right">THIS IS NOT A DOCUMENT OF TITLE</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-right company">
+                                <div class="logo-container">
+									<img class="logo" alt="Company logo" src="data:image/png;base64,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">
+                                    <div class="after-logo">Logistics & Services</div>
+                                </div>
+								<p class="name">Damco China Limited</p>
+								<p class="details">26F, Gopher Center, No.757 Meng Zi Road Shanghai China 200023<br /></p>
+								<p class="legal">This forwarder&#39;s cargo receipt is to be issued upon presentation of the corresponding dock receipt.
+This document is issued only to aid the shipper in seeking negotiation on the relevant letter of credit.
+This documents does not grant any title to the goods described.
+	
+Cargo will be containerized and shipped under ocean Bill(s) of Lading, to be issued by the carrier,and subject to the terms and conditions thereof. Goods are received subject to delay or the carrier&#39;sinability to carry due to any reason whatsoever. Maersk is acting as agent only.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-right"><label class="italics span">D/R NO.</label></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="no-border-right"><label class="italics">EXPORT LICENCE NO.</label></td>
+                        </tr>
+                        <tr>
+                            <td><label class="italics">PORT OF DISCHARGE</label>Shanghai, China</td>
+                            <td class="no-border-right"><label class="italics">PLACE OF DELIVERY</label>San Pedro, United States</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+		</div>
+		<div class="receipt-items">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="no-border-left marks-numbers">MARKS &amp; NUMBERS</th>
+                        <th>NUMBER AND KIND OF PACKAGES</th>
+                        <th class="description-of-goods">DESCRIPTION OF GOODS</th>
+                        <th>GROSS WEIGHT</th>
+                        <th class="no-border-right">MEASUREMENT</th>
+					</tr>
+					<tr class="order-items-clause">
+						<th colspan="5">Shipper's Load, Stow and Count:</th>
+					</tr>
+                </thead>
+                <tbody>
+					<tr>
+						<td colspan="3"></td>
+						<td>KILOGRAM:</td>
+						<td>CUBIC_METER:</td>
+					</tr>
+                    <tr class="to-be-removed">
+                        <td>MEN&#39;S JACKET
+( COMPOSITION : OUTSHELL -  100% POLYESTER,
+                                 LINING - 100% POLYAMIDE,
+                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)
+HS code:
+62033300
+Cont/seal:
+CAIU8246820/ML-VN4086125
+ART NO//REF NO//ORDER NO
+3402/217//RANGLANERE//30097-06/1
+7099PCS//552 CTNS//52.99 CBM//5405.55KGS
+* CONTRY OF ORIGIN : VIETNAM
+* FOB:VIETNAM
+* BRAND : MASSIMO DUTTI
+* No.&amp; Date of  L/C:M12BH2105XU00025  -  210</td>
+                        <td>0 PALLET</td>
+						<td>MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210</td>
+                        <td>0.000</td>
+                        <td>0.000</td>
+					</tr>
+					<tr class="order-item-row summary to-be-removed">
+						<td class="marks-and-numbers summary">**Total:</td>
+						<td class="packages">0 PALLET</td>
+						<td class="description"/>
+						<td class="weight">0.000</td>
+						<td class="volume">0.000</td>
+					</tr>
+                    <tr class="to-be-shown" style="display:none;">
+                        <td colspan="5">* * AS PER ATTACHMENTS * *</td>
+                    </tr>
+                </tbody>
+			</table>
+		</div>
+		<div class="total"><label>TOTAL:</label>
+			<span class="to-be-removed"><ul class="container-inline-list"><li>1X20REEF/CLR_7238zlOGw0848 </li></ul>CONTAINERS - FREIGHT PREPAID</span>
+			<span class="to-be-shown" style="display: none">* * AS PER ATTACHMENTS * *</span>
+		</div>
+        <div class="footer">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="document-received no-border-left"><label>IN ACCORDANCE WITH INSTRUCTIONS FROM THE BUYER WE HAVE RECEIVED THE FOLLOWING DOCUMENTS ON:</label><span></span></td>
+						<td class="signature no-border-right" rowspan="2">
+							<p>Received the goods described above, in apparent good order and condition unless otherwise noted. The goods are to be delivered to the Consignee at the place of delivery and the Consignee needs not surrender any Original of the Forwarder's Cargo Receipt when they take cargo delivery. The Consignee has the irrevocable right to dispose of the goods once the goods are received by Maersk from the Shipper. 
+In witness whereof ( ONE 1 ) Forwarder's Cargo Receipt(s) all of this date have been issued. All transactions are subject to Maersk's standard trading conditions, available on https://terms.maersk.com/STC or on request.</p>
+							<div>
+								<label>FOR</label>
+								<span>Damco China Limited</span>
+								<div class="signature-container">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAABOCAYAAADo3B4PAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAn2SURBVHhe7ZwJUJTnGcetjfdRKYqg4ZBLCorAAgvLISunuAgOC3K7ymJdUBRXEVGLByDCBNkUETJaBVGr0RmkxkKSlsyoNB3RogGvyqETG01sapIOU3Xi9v9u3uyEAIIpY4Xv+c18s7vP++3ux/dc/2f3W0YQBEEQBEEQBEEQBEEQBEEQBEEQBEEMLs3NzUapqanmuPvGdxZCMKjVaiOVStUoFourJ0+e/EtuJoSAVqsdGRMTUzBjxoyrIpHIjJsJodDa2uqgVCofe3l5reAmQkicPn3aZc2aNbew2XMTISRiY2M90QJa6+rqrLmJEBJhYWH75XJ5aU5ODql/oXHhwgUrlv0ymcyOmwghodFo5mP2vw4BSOpfiAQGBvoGBAQcbmlpGc1NhJBA/98uFouL+ENCSNTW1o4PCgq6FBwcvJ2bCKFQUVExqqSkRGNjY9NlbGx8FW0ghS8RQuD48eNBkZGRXbNmzVJKpdIkd3f3+97e3vP58mvPli1bgqKjo4Pnz5//P42uCHyb2NjY5SqVKoCbhMFyoFQqu1asWOGv1WrHoA3UW1hYnGLfC/BdXksyMjLG4bgVEK+fW1pa3kfg+vCllyYkJCTeycnpb/b29l/OnTv3U7TDpPr6+gl8efjCFD/E3/GqqiotAiCV2Xbv3j03NDT0obOz81LdTq8hOTk5Y1GlKl1cXD7Pzc29EhER8WDRokXufHnA5OXlTROJRDvQ/u7Nmzfv3ZiYmEBUwbdsbW0f+/r6Vqenp7utXbt2yp49eybxp+jBeTIoKCj4hUKhcMH7r8AxDb3p6cSJE+4JCQkP8vPztbhVMVtTU9Mof3//A2ZmZjW6nV4z1q1bZyKTyQ44Ojqyr6xFCFyFRCI5j+N/qYxdtmyZCNXuIoLo7oIFC8K4WcfChQuXY7tjbW3dicA4j/NxGvtEwdkLFi9eLMVjFdrmB35+fp8gWRpRRLdHRUX9nD996FBZWSnbt2/fU/wB36KPJnEzawuWrq6uDVgz5aZBgQlOZIpvZmbmr1mgpaamTkTWTefL/dLQ0DAVFessSn4Hjk93bD4+Pllw0tsnT57UOwAZaYibn333qDs3btyYBMclu7m53YTTmpDJFnypG3v37p2CSqBEIlTivb6Ao79KSkp6BMd/gWDoQoV8H8GwBa1o5g/fe0gBZ4TU1NQ8QzZ8olar2RVAOqqrq80RBLdQVn9yX+0NCLUAZGsbxNa/i4uL8+G8kx4eHg3h4eFOfJc+ef78+bilS5eWw7n/TElJETMbTn4CXus+hFuQbieAXh6I7fc//kQTwfMG/l5vaIYaCN5OODW3rKzMiC/3CdNCCFQnVBrfuLg4X3aL1uCN89ajLQw5CgsLEw4fPvwMJzDvhyUM2sA4LS3tHkTRNpyAXjPpp4Aqs2b16tXaM2fOaB0cHL6dM2dOzcqVK1uR1UX9iU5k32Y4vysrKyuKm0YkJydnoFR/dPv27THsMcScB8Rgm7m5+RNs6u+PHVluGR8fvwv9/gHaxkMEni+zC5pz586NgcA5hejWIisSuFkHO3E4sW/jhJ1C1gzKNIAMnLJ+/foPOjo6tFu3btVOnTr1EKrOhJKSkio45CaCsM92g56bDmX+BJmXyU064NS1iYmJ7+PuSAhZI5T2SyjVWdAH7xgZGX3j6emZC72wEX2+CQH3BMLxIP6eXku+4GATAE5oFYRQF7IwhJv1oEeut7Ky+nCwKgCcswgz+9d37tzR4rUfoxIsYHY4pBTO6YSDe1yDsHHjxkko1evgwA44OhHH0q3XovyvxfxeDxFriPHtd3B224EDByahdc2Bs8/PnDmzA62gHQF0AdUikD+NYLCSv3///lJkehN6mwE360FwmKFX/hkn34qbBgyycQJGpGi0GH1vRu9X7dq1S4v31NrZ2b3X3NysU+0o/8kYuW5Bxc/S7cjBiGaHY/sQbegvEFz+3NwNVBQVAuAhKlUdtm+2bdumV/OoKAaoBsZLliwxKSoqGv4z/cvS2Ng4DiXyGk5+VW/fAB47dmw6xOF1lOdgbuoX1i4g6CQQdsdw+x+Ivo83bNhgzNaQ4SF4rUcYrZ5BpCl1TwBM0KG3P1QqlbqKwIDQMofSPg/nX8Vtn1MC2sd0zPB1eM0GFAhPbiYGApwzFiLsMoIgkZu6cffuXQNkWBv6ae5AdAAcbgpn5aNi3EOG1x48eLCcXV+IMcqSraPijMbYFIMR7jMEgt7ZTBugOrB5/AqbsZHRsXh+M1pTJ6rIr/hufYJjG40xjL7CflmgjJ3RXz/FDL2Em7rBej8cUgBnXER5HcXNvYIsd0RWN2FrQdlOYnMx+rwrWsh1U1NTfQuB41ehV/8BmmM8N+mQy+XWCMRaZHPt7Nmz30PPLodeGNTPIIgfgWxdjdJ5Ew55k5t6gArhCDXdikBx46YeoHTHo5q0QWxdwpyuV9jTpk2TYLuOTRcAKOsz0MsvY98egpOBgBvJMpmy+RWBTNsAlfzWi1Q+y1T07nZbW9t8btKjUChMobTLMUJ+iVaxH6V4Ml/SYWBgIMGo14ogexPvMQal/RDU+SXcf2E1IV4BcNZ4ZOIVlOw4buoVFhwQaRkWFha3QkJCdJUCPXsiervc3d39Kkr2GfYpXEVFRbeSzoC49ETgfIYKgQksOQ9qn6n0XtsN8Yphn1+jz/4dZXkxN/UJy1gIsmtQ5EeQwQEQe0fEYvFX0AcX2ajFd+tBZWWlIbK+EW3ka+iCp5mZmev5EvH/JisrKxVO/AccM5ebXkh2dnYYguBPEHV/RNZ/hLFt69GjR/t0/vfA+dMxEsZHR0dLX9RqiFcIcwRU/V5ogCNMrXNzvzBxhtYxVqPR6D53J4Yo6enp09G/72K+j+QmQkgUFhbGSSSSRyjjQ+a6P2IQwayej9m/BQJtBjcRQgKjWS76f4+5nhAAmNfNvL29rzk4OAz4Cx5iGFFcXJwFAfgvzPMibiKExObNm38bFBRUX1paOpGbCCHh7Oxc5ubmprv8mxAYcXFx5k5OTu02Nja6K2oJgZGSkiLx9PRsj4qK6vcSbGIYsmPHjnKpVHo5Ly9vwD/EIIYRHh4e79jb2/+GPySEBLtm3sXF5WNs1P+FSEREhLtEImmXy+WzuYkQEgqFIjUwMLBz586dFABCJDs7+11HR8eLaWlp7FezhNDw8vI6xi4C5Q8JoWFubl6OKcCFX5ZFl2YJCY1GMxnjX62hoeHsVatWBSuVSlu+RAiByMhIHwRAp4+Pjyk0gEalUkn5EiEExGKxn4mJyVX2K19MA3/dtGmTN18ihIBarXYLDQ3tCA8PXyORSOrOnj3b7+XcxDACwm+kq6trDYLgqUwmO8TNhJAQiUR+Uqm0uqysbFD/6RMxhGD/j4ffJQiCIAiCIAiCIAjidWPEiP8CvwWM8grHC38AAAAASUVORK5CYII=" />
+								</div>								
+								<span class="field">...............................................................</span>
+								<label>AUTHORIZED SIGNATURE</label>
+								<div class="date-and-legal">
+									<label>DATE: </label><span>9 Aug., 2021</span>
+									<label class="legal">MAERSK is a trading name for Damco China Limited</span>
+								</div>
+							</div>
+						</td>
+                    </tr>
+                    <tr>
+                        <td class="document-list no-border-left">
+							<div>
+								<div>
+									<span>COPY</span>
+									<span>ORIGINAL</span>
+								</div>
+								<ol>
+								</ol>
+							</div>
+							<label id="fewdocs">The above documents plus Bill of Lading will be dispatched to consignee or other designated parties</label>
+							<label style="display:none" id="lotdocs">*** Continued on Attachment ***</label>
+						</td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+		<div class="page-counter-reset" />    
+	</div>
+	<div class="page order-items">
+		<table>
+			<thead class="header">
+				<tr>
+					<td colspan="2" rowspan="2">
+						<div id="attachementNumber">Attachment No.: </div>
+					</td>
+				</tr>
+				<tr>
+					<td>FORWARDER'S CARGO RECEIPT</td>
+				</tr>
+				<tr>
+					<td>Receipt No.:</td>
+					<td colspan="2">FCR000010618</td>
+				</tr>
+				<tr>
+					<td>Vessel Voyage:</td>
+					<td colspan="2"> </td>
+				</tr>
+				<tr>
+					<td>Place of Delivery:</td>
+					<td colspan="2">San Pedro, United States</td>
+				</tr>
+				<tr class="field-headers">
+					<td class="marks-numbers">MARKS & NUMBERS</td>
+					<td>NUMBERS AND KIND OF PACKAGES</td>
+					<td>DESCRIPTION OF GOODS</td>
+					<td>GROSS WEIGHT KILOGRAM</td>
+					<td>MEASUREMENT CUBIC_METER</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="order-item-row to-be-removed-if-only-docs">
+					<td class="marks-and-numbers">MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210		MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210	MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210</td>
+					<td class="packages">0 PALLET</td>
+					<td class="description">MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210		MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210	MEN&#39;S JACKET( COMPOSITION : OUTSHELL -  100% POLYESTER,                                 LINING - 100% POLYAMIDE,                                 FILLING - 80% GREY DUCK DOWN, 20% FEATHER)HS code:62033300Cont/seal:CAIU8246820/ML-VN4086125ART NO//REF NO//ORDER NO3402/217//RANGLANERE//30097-06/17099PCS//552 CTNS//52.99 CBM//5405.55KGS* CONTRY OF ORIGIN : VIETNAM* FOB:VIETNAM* BRAND : MASSIMO DUTTI* No.&amp; Date of  L/C:M12BH2105XU00025  -  210</td>
+					<td class="weight">0.000</td>
+					<td class="volume">0.000</td>
+				</tr>
+				<tr class="order-item-row summary">
+					<td class="marks-and-numbers summary">**Total:</td>n
+					<td class="packages">0 PALLET</td>
+					<td class="description" />
+					<td class="weight">0.000</td>
+					<td class="volume">0.000</td>
+				</tr>
+				<tr class="order-item-row total">
+					<td class="total" colspan="5"><label>TOTAL: </label>
+						<span><ul class="container-inline-list"><li>1X20REEF/CLR_7238zlOGw0848&#8203; </li></ul>CONTAINERS - FREIGHT PREPAID</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="fcr-end">---*** END OF FCRs ***---</div>
+	</div>
+</body>
+
 </html>
